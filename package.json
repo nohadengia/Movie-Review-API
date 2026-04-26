@@ -9,5 +9,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "\"# Movie-Review-API\"",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nohadengia/Movie-Review-API.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nohadengia/Movie-Review-API/issues"
+  },
+  "homepage": "https://github.com/nohadengia/Movie-Review-API#readme"
 }

@@ -3,13 +3,13 @@ const fs = require('fs');
 
 const server = http.createServer((req, res) => {
 
-     if (req.method === 'GET' && req.url === '/movies') {
+    if (req.method === 'GET' && req.url === '/movies') {
         const data = fs.readFileSync('file.json', 'utf8');
         res.setHeader('Content-Type', 'application/json');
         return res.end(data);
     }
 
-     else if (req.method === 'GET' && req.url.startsWith('/movies/')) {
+    else if (req.method === 'GET' && req.url.startsWith('/movies/')) {
         const id = req.url.split('/')[2];
 
         let data = JSON.parse(fs.readFileSync('file.json', 'utf8'));
@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
         return res.end(JSON.stringify(movie));
     }
 
-     else if (req.method === 'POST' && req.url === '/movies') {
+    else if (req.method === 'POST' && req.url === '/movies') {
         let body = '';
 
         req.on('data', chunk => {
@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
         });
     }
 
-     else if (req.method === 'PUT' && req.url.startsWith('/movies/')) {
+    else if (req.method === 'PUT' && req.url.startsWith('/movies/')) {
         const id = req.url.split('/')[2];
         let body = '';
 
@@ -67,6 +67,19 @@ const server = http.createServer((req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ message: "Updated" }));
         });
+    }
+
+    else if (req.method === 'DELETE' && req.url.startsWith('/movies/')) {
+        const id = req.url.split('/')[2];
+
+        let data = JSON.parse(fs.readFileSync('file.json', 'utf8'));
+
+        data = data.filter(m => m.id != id);
+
+        fs.writeFileSync('file.json', JSON.stringify(data, null, 2));
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify({ message: "Deleted" }));
     }
 
     else {
